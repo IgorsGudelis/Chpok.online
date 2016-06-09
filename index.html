@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+<head>
+    <title>Blank Cordova Mobile App Project Template (Lite)</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style>
+        /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+        /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+        @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+    </style>
+    
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+    <link rel="stylesheet" href="css/ionicons-2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+    <script src="cordova.js"></script>          <!-- phantom library, needed for Cordova api calls, added during build -->
+    <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
+    <script src="js/jquery-2.2.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mustache.js"></script>
+    <script src="js/initial.min.js"></script>
+    <!--<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
+</head>
+
+<body>
+    <div class="panel-overlay"></div>     
+    <div class="panel panel-left panel-reveal" style="background-color: #DED9D9;">
+        <div class="content-block">
+            <p style="border-bottom: 1px solid black;"><a href="#" id="linkUserAccount" class="open-popup button" data-popup=".popup-userAccount" style="border-color: #DED9D9; color: black;"></a></p>
+            <p><a href="#" class="linkDashboard button" style="border-color: #DED9D9; color: black;">Dashboard</a></p>
+            <!--<p><a href="#" id="" class="btnLogIn open-popup button" data-popup=".popup-logInForm" style="color: black;">Log in</a></p>-->
+            <p><a href="#" id="" class="btnLogOut button" style="display: none; border-color: #DED9D9; color: black;">Log out</a></p>
+            <!--<p><a href="#" id="btnSignUp" class="open-popup" data-popup=".popup-signUpForm">Sign  up</a></p>-->
+            <p><a href="#" id="linkClosePanel" class="close-panel button" style="border-color: #DED9D9; color: black;">Close</a></p>
+        </div>
+    </div> 
+    
+    <div class="popover popover-actions">
+    <div class="popover-angle"></div>
+    <div class="popover-inner">
+        <div class="list-block">
+            <ul style="font-size: 13px;">
+                <li><a href="#" id="linkSearch" class="list-button item-link" style="color: black;"><i class="icon ion-android-search"></i> Search</a></li>
+                <li><a href="#" id="linkAllMessages" class="list-button item-link" style="color: black;">Show all</a></li> 
+                <li><a href="#" id="linkDeleteAllMessages" class="list-button item-link" style="color: black;" data-confirm="Delete all messages?">Delete all</a></li>
+                <li><a href="#" class="linkDashboard list-button item-link" style="color: black;">Dashboard</a></li> 
+            </ul>
+      </div>
+    </div>
+    </div>
+    
+    <div class="views">
+        <div class="view view-main">  
+            <div id="navbarMain" class="navbar" style="background-color: #DED9D9; color: black; height: 60px;">
+              <div class="navbar-inner">
+                  <div class="left">
+                      <a href="#" id="linkOpenPanel" class="open-panel" style="color: black; margin-left: 10px;"><i class="icon ion-navicon-round"></i></a>
+                  </div>
+                  
+                  <div id="centerMain" class="center"><img src="imgs/chpok.online.png" style="width: 100px; height: 50px;"></div>
+                    
+                <div class="right">
+                    <a href="#" id="linkNavPopover" class="open-popover button" data-popover=".popover-actions" style="font-size: 20px; color: black; border-color: #DED9D9;"><i class="icon ion-android-more-vertical"></i></a>
+                </div>
+              </div>
+            </div>   
+            
+            <div id="navbarSearh" class="navbar" style="height: 60px;">
+                <div class="navbar-inner">
+                    <div class="left"></div>
+
+                    <div class="center">
+ 
+                        <input id="inputSearchNavbar" type="search" placeholder="Name of sender" style="border-color: transparent; height: 40px; font-size: 20px;">
+
+                    </div>
+                    
+                    <div class="right">
+                        <a href="#" id="linkSearchNavbar" class="button" style="color: black; border-color: #F7F7F8;">
+                            <i class="icon ion-android-search"></i> 
+                        </a>
+                    </div>
+                </div>
+            </div>       
+            
+            <div class="pages navbar-through toolbar-through">
+                <div class="page" data-page="homePage">
+                    <!--<div id="pageContent" class="page-content" style="background-color: #DEDEE2;">-->
+                    <div id="pageContent" class="page-content" style="background-image: url('imgs/post5.png'); background-repeat: no-repeat; background-size: 100% 100%;">
+                        
+                        <div id="dashBoard">
+                            <div id="dashboardTitle" class="content-block-title" style="color: white;">
+                                Dash board
+                                <div style="float: right;"><a href="#" id="closeDashboard" style="color: white;">Close</a></div>
+                            </div>
+                            
+                            <div id="dashboardBlockInset" class="content-block inset">
+                                <div id="dashboardBlockInner" class="content-block-inner" style="background-color: #C3C0C0;">
+                                    <div>
+                                        <div style="display: inline-block; width: 40%;">Account Rank:</div>
+                                        
+                                        <div class="dashboardInfo" style="display: inline-block;  margin-left: 4.5%;">Platinum</div>
+                                        
+                                        <div id="dashboardRankBtn" style="display: inline-block; margin-left: 5%; padding: 1px 10px; width: 15.5%; text-align: center; background-color: #2B140A; color: white;">
+                                            Up <i class="fa fa-arrow-up" aria-hidden="true" style="color: green;"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div style="display: inline-block; width: 40%;">Balance USD: </div> 
+                                        
+                                        <div class="dashboardInfo" style="display: inline-block;  margin-left: 4%;">
+                                            <i class="icon ion-social-usd"></i>
+                                            58,3
+                                        </div>
+                                        
+                                        <div style="display: inline-block; width: 30%;"></div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div style="display: inline-block; width: 40%;">Balance BTC: </div>
+                                        
+                                        <div class="dashboardInfo" style="display: inline-block;  margin-left: 4.5%;">
+                                            <i class="icon ion-social-bitcoin"></i> 
+                                            12,3
+                                        </div>
+                                    
+                                        <div style="display: inline-block; width: 30%;"></div>
+                                    </div>
+                            
+                                    <div>
+                                        <div style="display: inline-block; width: 40%;">Credits: </div>
+                                        <div class="dashboardInfo" style="display: inline-block;  margin-left: 4.5%;">1392</div>
+                                        <div style="display: inline-block; width: 30%;"></div>
+                                    </div>
+                            
+                                    <div>
+                                        <div style="display: inline-block; width: 45%;">Downline growth: </div>
+                                        
+                                        <div style="display: inline-block;">0,3 per h</div>
+                    
+                                        <div id="dashboardDownlineBtn" style="display: inline-block; margin-left: 3.5%; padding: 1px 10px; width: 15.5%; text-align: center; background-color: #2B140A; color: white;">
+                                            Up <i class="fa fa-arrow-up" aria-hidden="true" style="color: green;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--<div id="homePage">
+                            <div class="content-block-title">Log in/Log out</div>
+                            <div class="content-block">                          
+                                <div class="content-block-inner">                              
+                                    <p class="buttons-row">
+                                      <a href="#" id="btnSignUp" class="button button-fill color-green open-popup" data-popup=".popup-signUpForm">Sign  up</a>
+                                      <a href="#" id="btnLogIn" class="button open-popup" data-popup=".popup-logInForm">Log in</a>
+                                      <a href="#" id="btnLogOut" class="button" style="display: none;">Log out</a>
+                                    </p>  
+                                    <<p><a href="#" id="btnLogIn" class="button open-popup" data-popup=".popup-logInForm">Log in</a></p>
+                                    <p><a href="#" id="btnLogOut" class="button" style="display: none;">Log out</a></p>
+                                    
+                                    <p><a href="#" id="" class="btnLogIn button open-popup" data-popup=".popup-logInForm">Log in</a></p>
+                                    <p><a href="#" id="" class="btnLogOut button" style="display: none;">Log out</a></p>
+                                    
+                                    
+                                </div>                                                
+                            </div>                          
+                        </div>-->
+                        
+                        <div id="homePage">
+                            <!--<div class="content-block-title">Sign up/Log in</div>-->
+                            <div>
+                                <div class="content-block-title" style="color: white;">Log in</div>
+                                <div class="list-block">
+                                    <form id="logInForm">
+                                        <ul style="background-color: transparent;">                           
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon ion-person" style="color: white;"></i></div>
+
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                          <input type="text" name="userName" placeholder="Enter your name" autocomplete="on" style="color: white;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon ion-locked" style="color: white;"></i></div>
+
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input type="password" name="password" placeholder="Enter your password" style="color: white;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>                              
+                                        </ul>
+
+                                        <div class="content-block">         
+                                            <!--<p class="buttons-row" id="btnsRowLogInForm">
+                                                <input type="submit" value="Log in" class="button button-fill color-green"/>
+                                                <a href="#"  class="button close-popup">Cancel</a>
+                                            </p> -->
+                                            <div id="btnsRowLogInForm">
+                                                <div style="margin-bottom: 15px; background-color: #27AE60;">
+                                                    <input type="submit" value="Login" class="button" style="background-color: #27AE60; color: white; border-color: #27AE60; height: 40px; font-size: 18px;"/>
+                                                </div>
+
+                                                <div style="border: 1px solid white;">
+                                                    <input type="reset" class="" style="width: 100%; background-color: transparent; border-color: transparent; color: white; font-size: 18px; height: 40px; margin: 0;" value="Cancel "> 
+                                                </div>
+                                            </div>
+                                        </div>                         
+                                    </form>                          
+                                </div> 
+                            </div>                          
+                        </div>
+                                           
+                        <div id="firstEnterPage">
+                            <div class="content-block-title" style="color: white;">Account</div> 
+                            <div class="list-block">
+                                <ul style="color: white; background-color: transparent;">
+                                    <li>
+                                        <li class="item-content">
+                                            <div class="item-media"><i class="icon ion-person"></i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title">User name</div>
+                                                <div id="userNameServer" class="item-after" style="color: white;">Asdf</div>
+                                            </div>
+                                        </li>                    
+                                    </li>
+
+                                    <li>
+                                        <li class="item-content">
+                                            <div class="item-media"><i class="icon ion-locked"></i></div>
+                                            <div class="item-inner">
+                                                <div class="item-title">Password</div>
+                                                <div id="userPasswordServer" class="item-after" style="color: white;">123123123</div>
+                                            </div>
+                                        </li>                    
+                                    </li>  
+                                </ul>
+
+                                <div class="content-block">
+                                    <div style="border: 1px solid white;"><a href="#" id="btnFirstEnterPageClose" class="button" style="border-color: transparent; color: white; font-size: 18px;">Close</a></div>
+                                </div>   
+                            </div>
+                        </div>
+                                          
+                        <div id="allUsersAllMessages"> 
+                            <div class="content-block-title" style="color: white;">Messages</div>
+                                                   
+                            <div class="list-block">
+                                <ul id="allUsersAllMessagesList" style="background-color: #C3C0C0;"></ul>
+                            </div>                      
+                        </div>
+                                                                  
+                        <div id="userMessage" style="padding: 15px; background-color: #C3C0C0;"></div>
+                        
+                        <div id="templates"></div> 
+                
+                        <!--<a href="#" id="test" class="button">Test</a>-->
+                        <!--<a href="#" id="test2" class="button">Test2</a>-->
+                    </div>
+                </div>                                           
+            </div>
+        </div>
+    </div> 
+    
+    <!--<div class="popup popup-signUpForm">
+        <div class="content-block-title">Sign up</div>
+        <div class="list-block">
+            <form id="signUpForm">
+                <ul>                           
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="fa fa-user"></i></div>
+
+                            <div class="item-inner" style="margin-left: 19px;">
+                                <div class="item-input">
+                                  <input type="text" name="nickname" placeholder="Enter your name">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="fa fa-key"></i></div>
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input id="password1" type="password" name="password1" placeholder="Enter your password">
+                                </div>
+                            </div>
+                        </div>
+                    </li>                   
+                </ul>
+                
+                <div class="content-block">
+                    <p class="buttons-row">
+                        <input type="submit" id="btnSignUpSubmit" value="Sign up" class="button button-submit button-fill color-green"/>
+                        <a href="#" id="btnSignUpFormClose" class="button close-popup">Cancel</a>
+                    </p>                 
+                </div>                         
+            </form>                          
+        </div>                        
+    </div>-->
+    
+    <div class="popup popup-logInForm" style="background-image: url('imgs/post4.png'); background-repeat: no-repeat; background-size: 100% 100%;">
+        <div class="content-block-title" style="color: white;">Log in</div>
+        <div class="list-block">
+            <form id="logInForm">
+                <ul style="background-color: transparent;">                           
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon ion-person" style="color: white;"></i></div>
+
+                            <div class="item-inner">
+                                <div class="item-input">
+                                  <input type="text" name="userName" placeholder="Enter your name" autocomplete="on" style="color: white;">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon ion-locked" style="color: white;"></i></div>
+
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input type="password" name="password" placeholder="Enter your password" style="color: white;">
+                                </div>
+                            </div>
+                        </div>
+                    </li>                              
+                </ul>
+                
+                <div class="content-block">         
+                    <!--<p class="buttons-row" id="btnsRowLogInForm">
+                        <input type="submit" value="Log in" class="button button-fill color-green"/>
+                        <a href="#"  class="button close-popup">Cancel</a>
+                    </p> -->
+                    <div id="btnsRowLogInForm">
+                        <div style="margin-bottom: 15px; background-color: #27AE60;">
+                            <input type="submit" value="Login" class="button" style="background-color: #27AE60; color: white; border-color: #27AE60; height: 40px; font-size: 18px;"/>
+                        </div>
+                        
+                        <div style="border: 1px solid white;">
+                            <input type="submit" class="button close-popup" style="border-color: transparent; color: white; font-size: 18px; height: 40px; margin: 0;" value="Cancel "> 
+                        </div>
+                    </div>
+                </div>                         
+            </form>                          
+        </div> 
+    </div>
+    
+    <div class="popup popup-userAccount" style="background-image: url('imgs/post2.png'); background-repeat: no-repeat; background-size: 100% 100%;">
+        <div class="content-block-title" style="color: white;">Account</div> 
+        <div class="list-block">
+            <ul style="color: white; background-color: transparent;">
+                <li>
+                    <li class="item-content">
+                        <div class="item-media"><i class="icon ion-person"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title">User name</div>
+                            <div id="userNameAccount" class="item-after" style="color: white;"></div>
+                        </div>
+                    </li>                    
+                </li>
+                   
+                <li>
+                    <li class="item-content">
+                        <div class="item-media"><i class="icon ion-locked"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title">Password</div>
+                            <div id="userPasswordAccount" class="item-after" style="color: white;"></div>
+                        </div>
+                    </li>                    
+                </li>  
+            </ul>
+
+            <div class="content-block">
+                <div style="border: 1px solid white;"><a href="#" class="button close-popup" style="border-color: transparent; color: white; font-size: 18px;">Close</a></div>                 
+            </div>   
+        </div>
+    </div>
+    
+
+    
+    <script src="js/framework7.min.js"></script>
+    <script src="js/loadTemplates.js"></script>
+    <script src="js/Messenger.js"></script>
+    <script src="js/MessengerView.js"></script>
+    <script src="js/app.js"></script> 
+    
+</body>
+</html>

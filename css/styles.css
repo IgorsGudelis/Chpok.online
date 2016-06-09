@@ -1,0 +1,53 @@
+
+#navbarSearh{
+    display: none;
+}
+
+#allUsersAllMessages{
+    display: none;
+}
+
+#userAllMessages{
+    display: none;
+}
+
+#userMessage{
+    display: none;
+}
+
+#resultNewMessages{
+    display: none;
+}
+
+.error{
+    color: red;
+}
+
+#newMessagesAlert{
+    display: none;
+}
+
+#firstEnterPage{
+   display: none;
+}
+
+#homePage{
+    display: none;
+}
+
+#linkBackList{
+    
+}
+
+#linkDeleteMessage{
+    
+}
+
+.popover {
+    width: 110px;
+}
+
+/*Dash Board*/
+#dashBoard{
+    display: none;
+}
